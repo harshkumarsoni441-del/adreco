@@ -60,8 +60,8 @@ function Index() {
       {/* Stats */}
       <section className="border-b bg-surface">
         <div className="container-x grid grid-cols-2 gap-6 py-10 md:grid-cols-4">
-          {[{ n: 80, s: "%", l: "Max. energy efficiency*" }, { n: 30, s: "°C", l: "Operates down to minus" }, { n: 12, s: " yrs", l: "Equipment design life" }, { n: 5, s: "×", l: "Heat output per kW input" }].map((x) => (
-            <div key={x.l}><p className="font-display text-3xl font-black text-navy md:text-4xl"><Counter to={x.n} suffix={x.s} /></p><p className="mt-1 text-sm text-muted-foreground">{x.l}</p></div>
+          {[{ n: 80, s: "%", l: "Max. energy efficiency*" }, { n: 30, p: "-", s: "°C", l: "Lowest operating temperature" }, { n: 12, s: " yrs", l: "Equipment design life" }, { n: 5, s: "×", l: "Heat output per kW input" }].map((x) => (
+            <div key={x.l}><p className="font-display text-3xl font-black text-navy md:text-4xl"><Counter to={x.n} prefix={"p" in x ? x.p : ""} suffix={x.s} /></p><p className="mt-1 text-sm text-muted-foreground">{x.l}</p></div>
           ))}
         </div>
       </section>

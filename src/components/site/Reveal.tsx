@@ -31,7 +31,7 @@ export function useInView<T extends HTMLElement>() {
   return [ref, v] as const;
 }
 
-export function Counter({ to, suffix = "", duration = 1600 }: { to: number; suffix?: string; duration?: number }) {
+export function Counter({ to, suffix = "", prefix = "", duration = 1600 }: { to: number; suffix?: string; prefix?: string; duration?: number }) {
   const [ref, v] = useInView<HTMLSpanElement>();
   const [n, setN] = useState(0);
   useEffect(() => {
@@ -41,7 +41,7 @@ export function Counter({ to, suffix = "", duration = 1600 }: { to: number; suff
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [v, to, duration]);
-  return <span ref={ref}>{n}{suffix}</span>;
+  return <span ref={ref}>{prefix}{n}{suffix}</span>;
 }
 
 export function SectionHeading({ eyebrow, title, intro, light, center }: { eyebrow: string; title: ReactNode; intro?: ReactNode; light?: boolean; center?: boolean }) {
