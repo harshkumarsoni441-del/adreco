@@ -1,7 +1,5 @@
-import { useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, CalendarCheck, Leaf, ShieldCheck, Snowflake } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { categories } from "@/data/products";
 import { solutions } from "@/data/content";
@@ -19,22 +17,6 @@ const HERO_PROOF = [
 ];
 
 function KeyAdvantages() {
-  const rail = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
-
-  const go = (i: number) => {
-    const card = rail.current?.children[i] as HTMLElement | undefined;
-    card?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-  };
-
-  const onScroll = () => {
-    const el = rail.current;
-    if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    if (max < 4) { setActive(0); return; }
-    setActive(Math.round((el.scrollLeft / max) * (HERO_PROOF.length - 1)));
-  };
-
   return (
     <section aria-label="Key advantages" className="border-b bg-background py-7 md:py-9">
       <div className="container-x hidden gap-x-8 sm:grid sm:grid-cols-3">
@@ -50,18 +32,13 @@ function KeyAdvantages() {
       </div>
 
       <div className="container-x sm:hidden">
-        <div ref={rail} onScroll={onScroll} className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1">
+        <div className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1">
           {HERO_PROOF.map(({ i: I, t, d }) => (
             <article key={t} className="w-[82%] min-w-[82%] snap-center rounded-2xl border bg-surface p-4 shadow-card">
               <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent/12 text-accent ring-1 ring-accent/25"><I className="h-5 w-5" /></span>
               <h3 className="mt-3 text-sm font-extrabold leading-tight text-navy">{t}</h3>
               <p className="mt-1.5 text-xs leading-snug text-foreground/70">{d}</p>
             </article>
-          ))}
-        </div>
-        <div className="mt-3 flex justify-center gap-1.5">
-          {HERO_PROOF.map(({ t }, i) => (
-            <button key={t} type="button" onClick={() => go(i)} aria-label={`Show ${t}`} className={cn("h-1.5 rounded-full transition-all", i === active ? "w-6 bg-accent" : "w-1.5 bg-border")} />
           ))}
         </div>
       </div>
