@@ -44,11 +44,14 @@ function Tech() {
             <li key={s.t} className="flex gap-4"><span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-navy font-bold text-accent">{i + 1}</span><div><p className="font-bold text-navy">{s.t}</p><p className="text-sm text-muted-foreground">{s.d}</p></div></li>))}</ol>
         </Reveal>
       </section>
-      <section className="bg-surface py-16">
-        <div className="container-x">
-          <SectionHeading eyebrow="Advantages" title="Engineered for reliability" />
-          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{feats.map((f, i) => (
-            <Reveal key={f.t} delay={i * 60} className="rounded-2xl bg-background p-6 shadow-card"><f.i className="h-8 w-8 text-accent" /><p className="mt-3 font-bold text-navy">{f.t}</p><p className="mt-1 text-sm text-muted-foreground">{f.d}</p></Reveal>))}</div>
+      <section className="overflow-hidden bg-surface py-16">
+        <div className="container-x"><SectionHeading eyebrow="Advantages" title="Engineered for reliability" /></div>
+        <div className="mt-8 [mask-image:linear-gradient(90deg,transparent,black_6%,black_94%,transparent)]">
+          <ul className="flex w-max animate-marquee gap-5 px-5">{[...feats, ...feats].map((f, i) => (
+            <li key={i} aria-hidden={i >= feats.length} className="w-[260px] shrink-0 rounded-2xl border border-border bg-background p-6 shadow-card transition hover:-translate-y-1 hover:shadow-lift sm:w-[300px]">
+              <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-navy"><f.i className="h-6 w-6 text-accent" /></span>
+              <p className="mt-4 font-bold text-navy">{f.t}</p><p className="mt-1 text-sm text-muted-foreground">{f.d}</p>
+            </li>))}</ul>
         </div>
       </section>
       <section className="container-x grid gap-10 py-16 lg:grid-cols-2">

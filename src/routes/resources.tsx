@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { BookOpen, Download, FileText, Lock, Search } from "lucide-react";
 import { toast } from "sonner";
@@ -33,15 +33,20 @@ function Resources() {
   return (
     <>
       <PageHero eyebrow="Resources hub" title="Knowledge for better decisions" intro="Brochures, datasheets, installation guides and engineering insights." />
-      <section className="container-x py-12">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center">
+      <section className="container-x py-14 lg:py-20">
+        <div className="grid items-center gap-6 overflow-hidden rounded-3xl bg-gradient-navy p-6 text-navy-foreground sm:p-8 md:grid-cols-[minmax(0,1fr)_auto]">
+          <div className="flex min-w-0 items-center gap-4"><span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-accent text-accent-foreground"><FileText className="h-7 w-7" /></span>
+            <div className="min-w-0"><p className="text-xs font-bold uppercase tracking-wider text-accent">Featured</p><h2 className="text-xl font-extrabold sm:text-2xl">Adreco Heat Pump Product Brochure</h2><p className="text-sm text-navy-foreground/75">Full range, specifications and applications in one PDF.</p></div></div>
+          <Button variant="cta" onClick={() => toast.success("Brochure opened (demo)")}><Download />Download Brochure</Button>
+        </div>
+        <div className="mt-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="relative md:w-80"><Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" /><Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search resources" className="pl-9" aria-label="Search resources" /></div>
-          <div className="flex flex-wrap gap-2">{CATS.map((c) => <button key={c} onClick={() => setCat(c)} className={cn("rounded-full border px-3 py-1.5 text-sm font-medium", cat === c ? "border-primary bg-primary text-primary-foreground" : "hover:border-primary")}>{c}</button>)}</div>
+          <div className="flex flex-wrap gap-2">{CATS.map((c) => <button key={c} onClick={() => setCat(c)} className={cn("rounded-full border px-3 py-1.5 text-sm font-medium", cat === c ? "border-primary bg-primary text-primary-foreground" : "hover:border-primary")}>{c} <span className="opacity-60">({c === "All" ? resources.length : resources.filter((r) => r.cat === c).length})</span></button>)}</div>
         </div>
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((r) => (
-            <article key={r.title} className="group flex flex-col rounded-2xl bg-surface p-6 shadow-card transition hover:-translate-y-1 hover:shadow-lift">
-              <div className="flex items-center justify-between"><span className="grid h-11 w-11 place-items-center rounded-xl bg-background text-primary">{r.cat === "Blog" || r.cat === "Case studies" ? <BookOpen /> : <FileText />}</span>{r.gated && !unlocked && <Lock className="h-4 w-4 text-accent" />}</div>
+            <article key={r.title} className="group flex flex-col rounded-2xl border border-border bg-background p-6 shadow-card transition hover:-translate-y-1 hover:shadow-lift">
+              <div className="flex items-center justify-between"><span className="grid h-11 w-11 place-items-center rounded-xl bg-surface text-primary">{r.cat === "Blog" || r.cat === "Case studies" ? <BookOpen /> : <FileText />}</span>{r.gated && !unlocked && <Lock className="h-4 w-4 text-accent" />}</div>
               <p className="mt-4 text-xs font-bold uppercase tracking-wider text-accent">{r.cat}</p>
               <h3 className="mt-1 font-bold text-navy">{r.title}</h3>
               <p className="mt-2 flex-1 text-sm text-muted-foreground">{r.desc}</p>
@@ -51,10 +56,11 @@ function Resources() {
         </div>
         {list.length === 0 && <p className="mt-8 rounded-2xl bg-surface p-10 text-center text-muted-foreground">No resources match your search.</p>}
       </section>
-      <section className="container-x pb-20">
-        <SectionHeading eyebrow="FAQ" title="Frequently asked questions" />
-        <Accordion type="single" collapsible className="mt-6 max-w-3xl">{faqs.map((f) => <AccordionItem key={f.q} value={f.q}><AccordionTrigger className="text-left">{f.q}</AccordionTrigger><AccordionContent>{f.a}</AccordionContent></AccordionItem>)}</Accordion>
-      </section>
+      <section className="bg-surface py-14 lg:py-20"><div className="container-x grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+        <div><SectionHeading eyebrow="FAQ" title="Frequently asked questions" intro="Can't find your answer? Our engineers are happy to help." />
+          <Button asChild variant="cta" className="mt-6"><Link to="/contact">Ask an Engineer</Link></Button></div>
+        <Accordion type="single" collapsible className="rounded-2xl bg-background px-6 shadow-card">{faqs.map((f) => <AccordionItem key={f.q} value={f.q}><AccordionTrigger className="text-left">{f.q}</AccordionTrigger><AccordionContent>{f.a}</AccordionContent></AccordionItem>)}</Accordion>
+      </div></section>
       <Dialog open={!!gate} onOpenChange={(v) => !v && setGate(null)}>
         <DialogContent>
           <DialogHeader><DialogTitle className="text-navy">Unlock technical documents</DialogTitle><DialogDescription>Enter your email to access “{gate}”. (Demo — nothing is stored.)</DialogDescription></DialogHeader>

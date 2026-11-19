@@ -32,8 +32,7 @@ export function Header() {
       <header className={cn("sticky top-0 z-40 border-b transition-all duration-300", scrolled ? "border-border bg-background/90 shadow-card backdrop-blur-md" : "border-transparent bg-background")}>
         <div className={cn("container-x relative flex items-center justify-between gap-4 transition-all", scrolled ? "h-16" : "h-[72px]")}>
           <Logo />
-          {!scrolled && <p className="absolute right-8 top-1.5 hidden text-[11px] font-medium text-primary xl:block">Innovative Heat Pump Solutions for a Sustainable Tomorrow</p>}
-          <nav className={cn("hidden items-center gap-1 lg:flex", !scrolled && "xl:mt-4")} aria-label="Main">
+          <nav className={cn("hidden items-center gap-1 lg:flex")} aria-label="Main">
             {NAV.map((n) => (
               <Link key={n.to} to={n.to} activeOptions={{ exact: n.to === "/" }}
                 className="relative px-3 py-2 text-[13px] font-semibold text-navy transition-colors hover:text-accent data-[status=active]:text-accent data-[status=active]:after:absolute data-[status=active]:after:inset-x-3 data-[status=active]:after:-bottom-0.5 data-[status=active]:after:h-0.5 data-[status=active]:after:bg-accent">
@@ -41,7 +40,7 @@ export function Header() {
               </Link>
             ))}
           </nav>
-          <div className={cn("flex items-center gap-2", !scrolled && "xl:mt-4")}>
+          <div className={cn("flex items-center gap-2")}>
             <button onClick={() => setDrawerOpen(true)} className="relative grid h-10 w-10 place-items-center rounded-full hover:bg-secondary" aria-label={`Quote cart, ${count} items`}>
               <ShoppingBag className="h-5 w-5 text-navy" />
               {count > 0 && <span className="absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-accent-foreground">{count}</span>}
