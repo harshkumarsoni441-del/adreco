@@ -55,7 +55,7 @@ function Tech() {
         <div><SectionHeading eyebrow="Cold climate" title="Performance when it matters" intro="EVI models retain significantly more output in sub-zero temperatures than standard air source heat pumps. Curves are indicative." /></div>
         <div className="rounded-2xl bg-surface p-6"><PerformanceChart light={false} /></div>
       </section>
-      <section className="bg-surface py-16"><div className="container-x"><SectionHeading eyebrow="Smart tools" title="Plan with Confidence" /><div className="mt-8"><SmartTools initial="wizard" /></div></div></section>
+      <section className="bg-surface py-16"><div className="container-x"><SectionHeading eyebrow="Smart tools" title="Plan with Confidence" /><div className="mt-8"><SmartTools /></div></div></section>
       <PartnerBanner />
     </>
   );

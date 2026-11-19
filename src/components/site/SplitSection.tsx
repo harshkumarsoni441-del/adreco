@@ -12,9 +12,9 @@ export function SplitSection({ eyebrow, title, intro, cta, to, onCta, tone = "li
 }) {
   const dark = tone === "dark";
   return (
-    <section id={id} className={cn("relative overflow-hidden border-b py-10 md:py-12", tone === "light" && "bg-surface", tone === "white" && "bg-background", dark && "border-transparent bg-gradient-navy text-navy-foreground")}>
+    <section id={id} className={cn("relative overflow-hidden border-b py-9 md:py-12 xl:py-14", tone === "light" && "bg-surface", tone === "white" && "bg-background", dark && "border-transparent bg-gradient-navy text-navy-foreground")}>
       {dark && <div className="absolute inset-0 blueprint" />}
-      <div className="container-x relative grid items-center gap-8 lg:grid-cols-[250px_minmax(0,1fr)] xl:gap-10">
+      <div className="container-x relative grid items-center gap-6 md:gap-8 lg:grid-cols-[260px_minmax(0,1fr)] xl:grid-cols-[300px_minmax(0,1fr)] xl:gap-12">
         <Reveal>
           <span className="eyebrow">{eyebrow}</span>
           <h2 className={cn("mt-2 text-2xl font-extrabold leading-[1.15] md:text-[1.75rem]", dark ? "text-navy-foreground" : "text-navy")}>{title}</h2>

@@ -18,8 +18,8 @@ const social = [
 export function Footer() {
   return (
     <footer className="relative overflow-hidden bg-navy text-navy-foreground">
-      <div className="container-x grid gap-10 py-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_0.8fr_0.8fr_1.2fr_0.8fr] lg:gap-6">
-        <div>
+      <div className="container-x grid grid-cols-2 gap-x-6 gap-y-7 py-9 sm:grid-cols-3 lg:grid-cols-[1.3fr_1fr_0.8fr_0.8fr_1.2fr_0.8fr] lg:gap-6 lg:py-10">
+        <div className="col-span-2 border-b border-primary-foreground/10 pb-6 sm:col-span-3 lg:col-span-1 lg:border-0 lg:pb-0">
           <Logo light />
           <p className="mt-4 text-sm text-navy-foreground/80">Engineering Today. A Greener Tomorrow.</p>
         </div>
@@ -31,15 +31,7 @@ export function Footer() {
             </ul>
           </div>
         ))}
-        <div className="lg:border-l lg:border-primary-foreground/10 lg:pl-6">
-          <h3 className="text-sm font-bold">Contact</h3>
-          <ul className="mt-3 space-y-2 text-sm text-navy-foreground/75">
-            <li><a href="mailto:info@adreco.in" className="flex gap-2 hover:text-accent"><Mail className="h-4 w-4 shrink-0" />info@adreco.in</a></li>
-            <li><a href="tel:+919916844503" className="flex gap-2 hover:text-accent"><Phone className="h-4 w-4 shrink-0" />+91 99168 44503</a></li>
-            <li className="flex gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0" />Industrial Area Phase‑2, Chandigarh</li>
-          </ul>
-        </div>
-        <div className="lg:border-l lg:border-primary-foreground/10 lg:pl-6">
+        <div className="lg:order-last lg:border-l lg:border-primary-foreground/10 lg:pl-6">
           <h3 className="text-sm font-bold">Follow Us</h3>
           <div className="mt-3 flex gap-2">
             {social.map(({ I, l, href }) => (
@@ -47,10 +39,18 @@ export function Footer() {
             ))}
           </div>
         </div>
+        <div className="col-span-2 sm:col-span-2 lg:col-span-1 lg:border-l lg:border-primary-foreground/10 lg:pl-6">
+          <h3 className="text-sm font-bold">Contact</h3>
+          <ul className="mt-3 space-y-2 text-sm text-navy-foreground/75">
+            <li><a href="mailto:info@adreco.in" className="flex gap-2 hover:text-accent"><Mail className="h-4 w-4 shrink-0" />info@adreco.in</a></li>
+            <li><a href="tel:+919916844503" className="flex gap-2 hover:text-accent"><Phone className="h-4 w-4 shrink-0" />+91 99168 44503</a></li>
+            <li className="flex gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0" />Industrial Area Phase‑2, Chandigarh</li>
+          </ul>
+        </div>
       </div>
       <div className="border-t border-primary-foreground/10">
-        <div className="container-x flex flex-col items-center justify-between gap-3 py-4 text-xs text-navy-foreground/70 md:flex-row">
-          <span>© 2026 Adreco Engineering Pvt. Ltd. All Rights Reserved.</span>
+        <div className="container-x flex flex-col items-center justify-between gap-3 pb-20 pt-4 text-xs text-navy-foreground/70 md:flex-row md:pb-4">
+          <span className="text-center">© 2026 Adreco Engineering Pvt. Ltd. All Rights Reserved.</span>
           <div className="flex gap-4"><Link to="/contact" className="hover:text-accent">Privacy Policy</Link><span aria-hidden>|</span><Link to="/contact" className="hover:text-accent">Terms &amp; Conditions</Link></div>
         </div>
       </div>

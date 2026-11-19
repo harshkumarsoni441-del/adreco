@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ArrowRight, Calculator, Gauge, Home, Info, PiggyBank } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { FUELS, inr, payback, savings, sizeKw, type Fuel } from "@/lib/calc";
@@ -154,41 +155,61 @@ function Result({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function SmartTools({ initial = null }: { initial?: ToolId | null }) {
-  const [tool, setTool] = useState<ToolId | null>(initial);
+export function SmartTools() {
+  const [tool, setTool] = useState<ToolId | null>(null);
   const [roiSeed, setRoiSeed] = useState(0);
+  const active = TOOLS.find((t) => t.id === tool);
   return (
-    <div>
+    <>
       <div className="grid gap-4 md:grid-cols-3">
         {TOOLS.map((t) => (
-          <button key={t.id} onClick={() => setTool(tool === t.id ? null : t.id)} aria-pressed={tool === t.id} aria-controls="tool-panel"
-            className={cn("group flex items-start gap-4 rounded-xl border bg-background p-5 text-left shadow-card transition hover:-translate-y-0.5 hover:shadow-lift", tool === t.id ? "border-accent" : "border-border")}>
-            <t.icon className={cn("h-9 w-9 shrink-0 transition", tool === t.id ? "text-accent" : "text-primary")} strokeWidth={1.75} />
-            <span className="min-w-0"><span className="block font-bold leading-snug text-navy">{t.title}</span><span className="mt-1 block text-sm text-foreground/70">{t.desc}</span>
-              <span className="mt-3 inline-flex items-center gap-1 border-b border-accent text-sm font-semibold text-accent">{tool === t.id ? "Close" : "Calculate Now"} <ArrowRight className="h-3.5 w-3.5" /></span></span>
-          </button>
+          <article key={t.id} className="group flex h-full flex-col rounded-xl border bg-background p-5 shadow-card transition hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-lift">
+            <div className="flex items-start gap-4">
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-secondary text-primary transition group-hover:bg-accent group-hover:text-accent-foreground"><t.icon className="h-6 w-6" strokeWidth={1.75} /></span>
+              <div className="min-w-0">
+                <h3 className="font-bold leading-snug text-navy">{t.title}</h3>
+                <p className="mt-1 text-sm text-foreground/70">{t.desc}</p>
+              </div>
+            </div>
+            <Button variant="soft" className="mt-5 h-10 w-full justify-between rounded-lg font-semibold text-accent hover:bg-accent hover:text-accent-foreground" onClick={() => { if (t.id === "roi") setRoiSeed(0); setTool(t.id); }}>
+              Calculate Now <ArrowRight className="h-4 w-4" />
+            </Button>
+          </article>
         ))}
       </div>
-      {tool && (
-        <div id="tool-panel" className="mt-5 rounded-xl border bg-background p-5 shadow-card animate-fade-up md:p-7">
-          {tool === "wizard" && <Wizard />}
-          {tool === "savings" && <Savings onRoi={(s) => { setRoiSeed(s); setTool("roi"); }} />}
-          {tool === "roi" && <Roi key={roiSeed} initialSaving={roiSeed} />}
-        </div>
-      )}
-    </div>
+      <Dialog open={!!tool} onOpenChange={(o) => !o && setTool(null)}>
+        <DialogContent className="max-h-[calc(100dvh-2rem)] w-[calc(100vw-1.5rem)] max-w-4xl overflow-y-auto rounded-2xl p-0 sm:w-full">
+          {active && (
+            <>
+              <DialogHeader className="sticky top-0 z-10 flex-row items-center gap-3 space-y-0 border-b bg-background/95 p-5 pr-12 text-left backdrop-blur">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-accent text-accent-foreground"><active.icon className="h-5 w-5" /></span>
+                <div className="min-w-0">
+                  <DialogTitle className="text-lg font-extrabold text-navy">{active.title}</DialogTitle>
+                  <DialogDescription>{active.desc}</DialogDescription>
+                </div>
+              </DialogHeader>
+              <div className="p-5 md:p-7">
+                {tool === "wizard" && <Wizard />}
+                {tool === "savings" && <Savings onRoi={(v) => { setRoiSeed(v); setTool("roi"); }} />}
+                {tool === "roi" && <Roi key={roiSeed} initialSaving={roiSeed} />}
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 
 export function SmartToolsSection() {
   return (
-    <section id="tools" className="border-b bg-surface py-10 md:py-12">
-      <div className="container-x grid items-start gap-8 lg:grid-cols-[250px_minmax(0,1fr)] xl:gap-10">
+    <section id="tools" className="border-b bg-surface py-9 md:py-12 xl:py-14">
+      <div className="container-x grid items-center gap-6 md:gap-8 lg:grid-cols-[260px_minmax(0,1fr)] xl:grid-cols-[300px_minmax(0,1fr)] xl:gap-12">
         <div>
           <span className="eyebrow">Smart tools</span>
           <h2 className="mt-2 text-2xl font-extrabold leading-[1.15] text-navy md:text-[1.75rem]">Plan with Confidence</h2>
           <p className="mt-3 text-sm leading-relaxed text-foreground/75">Use our online tools to find the right heat pump for your project.</p>
-          <a href="#tool-cards" className="mt-5 inline-flex h-9 items-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-accent-foreground transition hover:brightness-105">Try Our Calculators <ArrowRight className="h-4 w-4" /></a>
+          <Button asChild variant="cta" size="sm" className="mt-5 rounded-full px-5"><a href="#tool-cards">Try Our Calculators <ArrowRight /></a></Button>
         </div>
         <div id="tool-cards" className="min-w-0"><SmartTools /></div>
       </div>

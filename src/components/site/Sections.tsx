@@ -26,9 +26,9 @@ export function ApplicationCard({ s }: { s: (typeof solutions)[number] }) {
 export function TechnologySection() {
   const benefits = ["High COP & Energy Efficiency", "Low Ambient Operation (up to -30°C)", "Inverter Technology", "Eco-Friendly Refrigerant"];
   return (
-    <section className="relative overflow-hidden bg-gradient-navy py-10 text-navy-foreground md:py-12">
+    <section className="relative overflow-hidden bg-gradient-navy py-9 text-navy-foreground md:py-12 xl:py-14">
       <div className="absolute inset-0 blueprint" />
-      <div className="container-x relative grid items-center gap-8 md:grid-cols-2 lg:grid-cols-[230px_1fr_1fr_1.2fr]">
+      <div className="container-x relative grid items-center gap-8 md:grid-cols-2 lg:grid-cols-[260px_1fr_1fr_1.2fr] xl:grid-cols-[300px_1fr_1fr_1.2fr] xl:gap-12">
         <Reveal>
           <span className="eyebrow">Our technology</span>
           <h2 className="mt-2 text-2xl font-extrabold leading-[1.15] md:text-[1.75rem]">Advanced Heat Pump Technology</h2>
@@ -78,17 +78,17 @@ export function PartnerBanner() {
   return (
     <section className="relative overflow-hidden bg-gradient-navy text-navy-foreground">
       <div className="absolute inset-0 blueprint" />
-      <div className="container-x relative flex flex-col items-start justify-between gap-5 py-6 md:flex-row md:items-center">
+      <div className="container-x relative grid gap-5 py-8 md:flex md:items-center md:justify-between md:py-7">
         <div className="flex items-center gap-4">
           <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-primary-foreground/10"><Handshake className="h-6 w-6 text-accent" /></span>
-          <div>
-            <h2 className="text-xl font-extrabold md:text-2xl">Partner with Adreco Engineering</h2>
-            <p className="text-sm text-navy-foreground/80">Let’s build a sustainable and energy-efficient future together.</p>
+          <div className="min-w-0">
+            <h2 className="text-lg font-extrabold leading-tight sm:text-xl md:text-2xl">Partner with Adreco Engineering</h2>
+            <p className="mt-1 text-sm text-navy-foreground/80">Let’s build a sustainable and energy-efficient future together.</p>
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-3">
-          <Button asChild variant="cta" className="rounded-full px-6"><Link to="/contact">Get in Touch <ArrowRight /></Link></Button>
-          <a href="tel:+919916844503" className="flex items-center gap-2 rounded-full bg-primary-foreground/10 px-5 py-2.5 text-sm font-semibold transition hover:bg-primary-foreground/20"><Phone className="h-4 w-4" />+91 99168 44503</a>
+        <div className="grid grid-cols-2 gap-3 md:flex md:shrink-0">
+          <Button asChild variant="cta" className="h-11 rounded-full px-6"><Link to="/contact">Get in Touch <ArrowRight /></Link></Button>
+          <a href="tel:+919916844503" className="flex h-11 items-center justify-center gap-2 rounded-full bg-primary-foreground/10 px-4 text-sm font-semibold transition hover:bg-primary-foreground/20"><Phone className="h-4 w-4 shrink-0" /><span className="truncate">+91 99168 44503</span></a>
         </div>
       </div>
     </section>
