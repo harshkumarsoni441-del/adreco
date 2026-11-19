@@ -10,6 +10,12 @@ import { SmartToolsSection } from "@/components/site/SmartTools";
 import { ApplicationCard, PartnerBanner, ProjectsCarousel, TechnologySection } from "@/components/site/Sections";
 import hero from "@/assets/hero-house.jpg";
 
+const HERO_PROOF = [
+  { i: Leaf, t: "Up to 80% Energy Efficient", d: "High COP — up to 5 kW heat from 1 kW electricity at rated conditions." },
+  { i: Snowflake, t: "Reliable in Extreme Cold", d: "Enhanced vapour injection and fast auto defrost for deep-winter operation." },
+  { i: ShieldCheck, t: "Long Life & Low Maintenance", d: "Negligible routine maintenance, up to 12-year life." },
+];
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -48,14 +54,20 @@ function Index() {
             <Button asChild variant="cta" className="rounded-full px-6 lg:h-11"><Link to="/shop">Explore Our Products <ArrowRight /></Link></Button>
             <Button variant="ghostLight" className="rounded-full px-6 lg:h-11" onClick={() => setAssessmentOpen(true)}><CalendarCheck />Get a Project Consultation</Button>
           </div>
-          <ul className="mt-8 grid max-w-xl gap-3 animate-fade-up sm:flex sm:gap-0 sm:divide-x sm:divide-primary-foreground/20 lg:mt-9" style={{ animationDelay: "460ms" }}>
-            {[{ i: Leaf, t: "Up to 80% Energy Efficient" }, { i: Snowflake, t: "Reliable in Extreme Cold" }, { i: ShieldCheck, t: "Long Life & Low Maintenance" }].map(({ i: I, t }) => (
-              <li key={t} className="flex items-center gap-3 py-1 text-xs font-semibold leading-tight sm:px-4 sm:text-sm sm:first:pl-0 lg:gap-2 lg:py-0">
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-primary-foreground/40"><I className="h-4 w-4" /></span>
-                <span className="sm:max-w-[7rem]">{t}</span>
-              </li>
-            ))}
-          </ul>
+        </div>
+      </section>
+
+      <section aria-label="Key advantages" className="border-b bg-background py-7 md:py-9">
+        <div className="container-x grid gap-x-8 gap-y-5 sm:grid-cols-3 sm:gap-y-0">
+          {HERO_PROOF.map(({ i: I, t, d }, i) => (
+            <Reveal key={t} delay={i * 90} className="flex items-center gap-3.5 sm:border-l sm:border-border sm:px-6 sm:first:border-l-0 sm:first:pl-0 sm:last:pr-0">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent/12 text-accent ring-1 ring-accent/25"><I className="h-5 w-5" /></span>
+              <span className="min-w-0">
+                <span className="block text-sm font-extrabold leading-tight text-navy md:text-[0.95rem]">{t}</span>
+                <span className="mt-1 block text-xs leading-snug text-foreground/70 md:text-[0.8rem]">{d}</span>
+              </span>
+            </Reveal>
+          ))}
         </div>
       </section>
 
