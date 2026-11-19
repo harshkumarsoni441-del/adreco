@@ -31,10 +31,12 @@ function Index() {
       <section className="relative isolate overflow-hidden bg-navy text-navy-foreground">
         <img src={hero} alt="Adreco air source heat pump installed beside a modern villa in the mountains" fetchPriority="high"
           className="absolute inset-0 -z-10 hidden h-full w-full object-cover object-[65%_center] lg:block" />
-        <div className="absolute inset-0 -z-10 hidden bg-gradient-hero lg:block" />
-        <div className="container-x pb-8 pt-9 sm:pt-12 lg:py-[clamp(4rem,7vw,7rem)]">
+        <img src={hero} alt="" aria-hidden
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-[90%_center] lg:hidden" />
+        <div className="absolute inset-0 -z-10 bg-gradient-hero" />
+        <div className="container-x py-14 md:py-20 lg:py-[clamp(4rem,7vw,7rem)]">
           <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-accent animate-fade-up md:text-sm">Next generation heat pump technology</p>
-          <h1 className="mt-3 max-w-2xl text-[clamp(2.1rem,7.5vw,4rem)] font-black leading-[1.08]">
+          <h1 className="mt-3 max-w-2xl text-[clamp(2.1rem,8vw,3.75rem)] font-black leading-[1.08] lg:text-[clamp(2.1rem,7.5vw,4rem)]">
             <span className="block animate-fade-up">Smarter Heating.</span>
             <span className="block animate-fade-up text-accent" style={{ animationDelay: "100ms" }}>Lower Energy.</span>
             <span className="block animate-fade-up" style={{ animationDelay: "200ms" }}>Better Comfort.</span>
@@ -42,20 +44,19 @@ function Index() {
           <p className="mt-4 max-w-md text-base font-medium text-navy-foreground/90 animate-fade-up md:text-lg" style={{ animationDelay: "300ms" }}>
             High-performance air source heat pumps for residential, commercial and industrial applications.
           </p>
-          <div className="mt-6 grid gap-3 animate-fade-up min-[420px]:flex min-[420px]:flex-wrap" style={{ animationDelay: "380ms" }}>
-            <Button asChild variant="cta" className="h-11 rounded-full px-6"><Link to="/shop">Explore Our Products <ArrowRight /></Link></Button>
-            <Button variant="ghostLight" className="h-11 rounded-full px-6" onClick={() => setAssessmentOpen(true)}><CalendarCheck />Get a Project Consultation</Button>
+          <div className="mt-6 flex flex-wrap gap-3 animate-fade-up" style={{ animationDelay: "380ms" }}>
+            <Button asChild variant="cta" className="rounded-full px-6 lg:h-11"><Link to="/shop">Explore Our Products <ArrowRight /></Link></Button>
+            <Button variant="ghostLight" className="rounded-full px-6 lg:h-11" onClick={() => setAssessmentOpen(true)}><CalendarCheck />Get a Project Consultation</Button>
           </div>
-          <ul className="mt-7 grid max-w-xl grid-cols-3 gap-2 animate-fade-up sm:flex sm:gap-0 sm:divide-x sm:divide-primary-foreground/20 lg:mt-9" style={{ animationDelay: "460ms" }}>
+          <ul className="mt-8 grid max-w-xl gap-3 animate-fade-up sm:flex sm:gap-0 sm:divide-x sm:divide-primary-foreground/20 lg:mt-9" style={{ animationDelay: "460ms" }}>
             {[{ i: Leaf, t: "Up to 80% Energy Efficient" }, { i: Snowflake, t: "Reliable in Extreme Cold" }, { i: ShieldCheck, t: "Long Life & Low Maintenance" }].map(({ i: I, t }) => (
-              <li key={t} className="flex flex-col items-center gap-2 text-center text-[11px] font-semibold leading-tight sm:flex-row sm:px-4 sm:text-left sm:text-sm sm:first:pl-0">
+              <li key={t} className="flex items-center gap-3 py-1 text-xs font-semibold leading-tight sm:px-4 sm:text-sm sm:first:pl-0 lg:gap-2 lg:py-0">
                 <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-primary-foreground/40"><I className="h-4 w-4" /></span>
                 <span className="sm:max-w-[7rem]">{t}</span>
               </li>
             ))}
           </ul>
         </div>
-        <img src={hero} alt="" aria-hidden className="block aspect-[16/10] w-full object-cover object-[88%_center] sm:aspect-[21/9] lg:hidden" />
       </section>
 
       <SplitSection tone="white" eyebrow="Our heat pump range" title={<>Engineered for<br className="hidden lg:block" /> Every Need</>} intro="From homes to industries, our advanced heat pump solutions deliver maximum efficiency and reliability." cta="View All Products" to="/shop">
