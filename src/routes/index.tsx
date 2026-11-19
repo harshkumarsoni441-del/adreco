@@ -1,5 +1,7 @@
+import { useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, CalendarCheck, Leaf, ShieldCheck, Snowflake } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { categories } from "@/data/products";
 import { solutions } from "@/data/content";
@@ -15,6 +17,57 @@ const HERO_PROOF = [
   { i: Snowflake, t: "Reliable in Extreme Cold", d: "Enhanced vapour injection and fast auto defrost for deep-winter operation." },
   { i: ShieldCheck, t: "Long Life & Low Maintenance", d: "Negligible routine maintenance, up to 12-year life." },
 ];
+
+function KeyAdvantages() {
+  const rail = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+
+  const go = (i: number) => {
+    const card = rail.current?.children[i] as HTMLElement | undefined;
+    card?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  };
+
+  const onScroll = () => {
+    const el = rail.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    if (max < 4) { setActive(0); return; }
+    setActive(Math.round((el.scrollLeft / max) * (HERO_PROOF.length - 1)));
+  };
+
+  return (
+    <section aria-label="Key advantages" className="border-b bg-background py-7 md:py-9">
+      <div className="container-x hidden gap-x-8 sm:grid sm:grid-cols-3">
+        {HERO_PROOF.map(({ i: I, t, d }, i) => (
+          <Reveal key={t} delay={i * 90} className="flex items-center gap-3.5 border-l border-border px-6 first:border-l-0 first:pl-0 last:pr-0">
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent/12 text-accent ring-1 ring-accent/25"><I className="h-5 w-5" /></span>
+            <span className="min-w-0">
+              <span className="block text-sm font-extrabold leading-tight text-navy md:text-[0.95rem]">{t}</span>
+              <span className="mt-1 block text-xs leading-snug text-foreground/70 md:text-[0.8rem]">{d}</span>
+            </span>
+          </Reveal>
+        ))}
+      </div>
+
+      <div className="container-x sm:hidden">
+        <div ref={rail} onScroll={onScroll} className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1">
+          {HERO_PROOF.map(({ i: I, t, d }) => (
+            <article key={t} className="w-[82%] min-w-[82%] snap-center rounded-2xl border bg-surface p-4 shadow-card">
+              <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent/12 text-accent ring-1 ring-accent/25"><I className="h-5 w-5" /></span>
+              <h3 className="mt-3 text-sm font-extrabold leading-tight text-navy">{t}</h3>
+              <p className="mt-1.5 text-xs leading-snug text-foreground/70">{d}</p>
+            </article>
+          ))}
+        </div>
+        <div className="mt-3 flex justify-center gap-1.5">
+          {HERO_PROOF.map(({ t }, i) => (
+            <button key={t} type="button" onClick={() => go(i)} aria-label={`Show ${t}`} className={cn("h-1.5 rounded-full transition-all", i === active ? "w-6 bg-accent" : "w-1.5 bg-border")} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -57,19 +110,7 @@ function Index() {
         </div>
       </section>
 
-      <section aria-label="Key advantages" className="border-b bg-background py-7 md:py-9">
-        <div className="container-x grid gap-x-8 gap-y-5 sm:grid-cols-3 sm:gap-y-0">
-          {HERO_PROOF.map(({ i: I, t, d }, i) => (
-            <Reveal key={t} delay={i * 90} className="flex items-center gap-3.5 sm:border-l sm:border-border sm:px-6 sm:first:border-l-0 sm:first:pl-0 sm:last:pr-0">
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent/12 text-accent ring-1 ring-accent/25"><I className="h-5 w-5" /></span>
-              <span className="min-w-0">
-                <span className="block text-sm font-extrabold leading-tight text-navy md:text-[0.95rem]">{t}</span>
-                <span className="mt-1 block text-xs leading-snug text-foreground/70 md:text-[0.8rem]">{d}</span>
-              </span>
-            </Reveal>
-          ))}
-        </div>
-      </section>
+      <KeyAdvantages />
 
       <SplitSection tone="white" eyebrow="Our heat pump range" title={<>Engineered for<br className="hidden lg:block" /> Every Need</>} intro="From homes to industries, our advanced heat pump solutions deliver maximum efficiency and reliability." cta="View All Products" to="/shop">
         <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
