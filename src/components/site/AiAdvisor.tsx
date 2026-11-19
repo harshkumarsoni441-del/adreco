@@ -77,7 +77,7 @@ export function AiAdvisor() {
   return (
     <>
       <button onClick={() => { setAdvisorOpen(true); if (!msgs.length) setStep(-1); }}
-        className="fixed bottom-20 right-4 z-30 flex items-center gap-2 rounded-full bg-gradient-navy px-4 py-3 font-semibold text-navy-foreground shadow-lift transition hover:-translate-y-0.5 md:bottom-6 md:right-6"
+        className="fixed bottom-20 right-3 z-30 flex items-center gap-2 rounded-full bg-gradient-navy p-2.5 md:px-4 md:py-3 font-semibold text-navy-foreground shadow-lift transition hover:-translate-y-0.5 md:bottom-6 md:right-6"
         aria-label="Ask Adreco AI">
         <span className="relative grid h-7 w-7 place-items-center rounded-full bg-accent"><Sparkles className="h-4 w-4" /><span className="absolute inset-0 animate-ping rounded-full bg-accent/40" /></span>
         <span className="hidden sm:inline">Ask Adreco AI</span>

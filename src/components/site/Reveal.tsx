@@ -48,7 +48,7 @@ export function SectionHeading({ eyebrow, title, intro, light, center }: { eyebr
   return (
     <div className={cn("max-w-2xl", center && "mx-auto text-center")}>
       <span className="eyebrow">{eyebrow}</span>
-      <h2 className={cn("mt-3 text-3xl font-extrabold leading-tight md:text-4xl", light ? "text-navy-foreground" : "text-navy")}>{title}</h2>
+      <h2 className={cn("mt-3 text-[clamp(1.6rem,5vw,2.25rem)] font-extrabold leading-tight", light ? "text-navy-foreground" : "text-navy")}>{title}</h2>
       {intro && <p className={cn("mt-4 text-base leading-relaxed", light ? "text-navy-foreground/75" : "text-muted-foreground")}>{intro}</p>}
     </div>
   );
@@ -60,10 +60,10 @@ export function PageHero({ eyebrow, title, intro, image }: { eyebrow: string; ti
       {image && <img src={image} alt="" className="absolute inset-0 h-full w-full object-cover opacity-35" />}
       <div className="absolute inset-0 blueprint" />
       {image && <div className="absolute inset-0 bg-gradient-hero" />}
-      <div className="container-x relative py-20 md:py-28">
+      <div className="container-x relative py-12 sm:py-16 md:py-24">
         <span className="eyebrow animate-fade-up">{eyebrow}</span>
-        <h1 className="mt-4 max-w-3xl text-4xl font-extrabold leading-[1.05] md:text-6xl animate-fade-up" style={{ animationDelay: "80ms" }}>{title}</h1>
-        {intro && <p className="mt-5 max-w-2xl text-lg text-navy-foreground/80 animate-fade-up" style={{ animationDelay: "160ms" }}>{intro}</p>}
+        <h1 className="mt-3 max-w-3xl text-[clamp(1.875rem,6.5vw,3.75rem)] font-extrabold leading-[1.08] animate-fade-up" style={{ animationDelay: "80ms" }}>{title}</h1>
+        {intro && <p className="mt-4 max-w-2xl text-base text-navy-foreground/80 md:text-lg animate-fade-up" style={{ animationDelay: "160ms" }}>{intro}</p>}
       </div>
       <div className="h-1.5 bg-gradient-brand" />
     </section>

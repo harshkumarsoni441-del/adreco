@@ -51,9 +51,9 @@ function ProductPage() {
         <BreadcrumbItem><BreadcrumbPage>{p.name}</BreadcrumbPage></BreadcrumbItem>
       </BreadcrumbList></Breadcrumb>
 
-      <div className="mt-6 grid gap-10 lg:grid-cols-[1fr_380px]">
+      <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_380px] [&>*]:min-w-0">
         <div className="min-w-0">
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 [&>*]:min-w-0">
             <div>
               <div className="relative aspect-square cursor-zoom-in overflow-hidden rounded-2xl bg-surface"
                 onMouseMove={(e) => { const r = e.currentTarget.getBoundingClientRect(); setZoom({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 }); }}
@@ -65,13 +65,13 @@ function ProductPage() {
                     style={zoom ? { transform: "scale(1.8)", transformOrigin: `${zoom.x}% ${zoom.y}%` } : undefined} />
                 )}
               </div>
-              <div className="mt-3 flex gap-3">
+              <div className="mt-3 flex flex-wrap gap-2 sm:gap-3">
                 {p.gallery.map((g, i) => (
-                  <button key={i} onClick={() => { setImg(i); setView360(false); }} aria-label={`Image ${i + 1}`} className={cn("h-20 w-20 overflow-hidden rounded-xl border-2", img === i && !view360 ? "border-accent" : "border-transparent")}>
+                  <button key={i} onClick={() => { setImg(i); setView360(false); }} aria-label={`Image ${i + 1}`} className={cn("h-16 w-16 shrink-0 overflow-hidden sm:h-20 sm:w-20 rounded-xl border-2", img === i && !view360 ? "border-accent" : "border-transparent")}>
                     <img src={g} alt="" className="h-full w-full object-cover" />
                   </button>
                 ))}
-                <button onClick={() => setView360(true)} className={cn("grid h-20 w-20 place-items-center rounded-xl border-2 bg-surface text-xs font-bold text-primary", view360 ? "border-accent" : "border-transparent")}><Rotate3d className="h-6 w-6" />360°</button>
+                <button onClick={() => setView360(true)} className={cn("grid h-16 w-16 shrink-0 place-items-center sm:h-20 sm:w-20 rounded-xl border-2 bg-surface text-xs font-bold text-primary", view360 ? "border-accent" : "border-transparent")}><Rotate3d className="h-6 w-6" />360°</button>
               </div>
             </div>
             <div>
@@ -86,15 +86,15 @@ function ProductPage() {
               </div>
               <p className="mt-5 flex items-center gap-2 text-sm"><Truck className="h-4 w-4 text-success" />In stock · typical lead time 2–4 weeks (placeholder)</p>
               <p className="mt-3 text-lg">{p.priceFrom ? <>Starting from <b className="text-navy">{formatINR(p.priceFrom)}</b> <span className="text-xs text-muted-foreground">(demo price)</span></> : <b className="text-navy">Price on enquiry</b>}</p>
-              <div className="mt-5 flex items-center gap-3">
+              <div className="mt-5 flex flex-wrap items-center gap-3">
                 <div className="flex items-center rounded-full border">
                   <button className="h-11 w-11" onClick={() => setQty(Math.max(1, qty - 1))} aria-label="Decrease quantity">−</button>
                   <span className="w-8 text-center font-bold" aria-live="polite">{qty}</span>
                   <button className="h-11 w-11" onClick={() => setQty(qty + 1)} aria-label="Increase quantity">+</button>
                 </div>
-                <Button variant="cta" size="lg" className="flex-1" onClick={() => add(p.slug, qty)}><Plus />Add to Quote Cart</Button>
+                <Button variant="cta" size="lg" className="min-w-[12rem] flex-1" onClick={() => add(p.slug, qty)}><Plus />Add to Quote Cart</Button>
               </div>
-              <div className="mt-3 grid grid-cols-2 gap-2">
+              <div className="mt-3 grid grid-cols-1 gap-2 min-[400px]:grid-cols-2">
                 <Button asChild variant="navy"><Link to="/quote" onClick={() => add(p.slug, qty)}>Request Quote</Link></Button>
                 <Button variant="soft" onClick={() => toggleCompare(p.slug)}><GitCompare />{compare.includes(p.slug) ? "Comparing" : "Compare"}</Button>
                 <Button variant="soft" onClick={() => toast.success("Brochure download started (demo)")}><Download />Brochure</Button>
@@ -154,7 +154,7 @@ function ProductPage() {
       </div>
 
       {recs.length > 0 && (
-        <section className="mt-20">
+        <section className="mt-14 md:mt-20">
           <SectionHeading eyebrow="You may also need" title="Recommended for you" />
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{recs.map((r) => <ProductCard key={r.slug} p={r} />)}</div>
         </section>

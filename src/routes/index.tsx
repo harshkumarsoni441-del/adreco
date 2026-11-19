@@ -33,7 +33,7 @@ function Index() {
         <div className="absolute inset-0 -z-10 bg-gradient-hero" />
         <div className="container-x py-14 md:py-20">
           <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-accent animate-fade-up md:text-sm">Next generation heat pump technology</p>
-          <h1 className="mt-3 max-w-2xl text-4xl font-black leading-[1.08] md:text-6xl">
+          <h1 className="mt-3 max-w-2xl text-[clamp(2.1rem,8vw,3.75rem)] font-black leading-[1.08]">
             <span className="block animate-fade-up">Smarter Heating.</span>
             <span className="block animate-fade-up text-accent" style={{ animationDelay: "100ms" }}>Lower Energy.</span>
             <span className="block animate-fade-up" style={{ animationDelay: "200ms" }}>Better Comfort.</span>
