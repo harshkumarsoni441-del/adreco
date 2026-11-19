@@ -10,33 +10,128 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CompareRouteImport } from './routes/compare'
+import { Route as QuoteRouteImport } from './routes/quote'
+import { Route as ShopRouteImport } from './routes/shop'
+import { Route as TechnologyRouteImport } from './routes/technology'
+import { Route as ApplicationsIndexRouteImport } from './routes/applications.index'
+import { Route as ApplicationsSlugRouteImport } from './routes/applications.$slug'
+import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuoteRoute = QuoteRouteImport.update({
+  id: '/quote',
+  path: '/quote',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShopRoute = ShopRouteImport.update({
+  id: '/shop',
+  path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TechnologyRoute = TechnologyRouteImport.update({
+  id: '/technology',
+  path: '/technology',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApplicationsIndexRoute = ApplicationsIndexRouteImport.update({
+  id: '/applications/',
+  path: '/applications/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApplicationsSlugRoute = ApplicationsSlugRouteImport.update({
+  id: '/applications/$slug',
+  path: '/applications/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsSlugRoute = ProductsSlugRouteImport.update({
+  id: '/products/$slug',
+  path: '/products/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/compare': typeof CompareRoute
+  '/quote': typeof QuoteRoute
+  '/shop': typeof ShopRoute
+  '/technology': typeof TechnologyRoute
+  '/applications/$slug': typeof ApplicationsSlugRoute
+  '/products/$slug': typeof ProductsSlugRoute
+  '/applications/': typeof ApplicationsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/compare': typeof CompareRoute
+  '/quote': typeof QuoteRoute
+  '/shop': typeof ShopRoute
+  '/technology': typeof TechnologyRoute
+  '/applications/$slug': typeof ApplicationsSlugRoute
+  '/products/$slug': typeof ProductsSlugRoute
+  '/applications': typeof ApplicationsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/compare': typeof CompareRoute
+  '/quote': typeof QuoteRoute
+  '/shop': typeof ShopRoute
+  '/technology': typeof TechnologyRoute
+  '/applications/$slug': typeof ApplicationsSlugRoute
+  '/products/$slug': typeof ProductsSlugRoute
+  '/applications/': typeof ApplicationsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/compare'
+    | '/quote'
+    | '/shop'
+    | '/technology'
+    | '/applications/$slug'
+    | '/products/$slug'
+    | '/applications/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/compare'
+    | '/quote'
+    | '/shop'
+    | '/technology'
+    | '/applications/$slug'
+    | '/products/$slug'
+    | '/applications'
+  id:
+    | '__root__'
+    | '/'
+    | '/compare'
+    | '/quote'
+    | '/shop'
+    | '/technology'
+    | '/applications/$slug'
+    | '/products/$slug'
+    | '/applications/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CompareRoute: typeof CompareRoute
+  QuoteRoute: typeof QuoteRoute
+  ShopRoute: typeof ShopRoute
+  TechnologyRoute: typeof TechnologyRoute
+  ApplicationsSlugRoute: typeof ApplicationsSlugRoute
+  ProductsSlugRoute: typeof ProductsSlugRoute
+  ApplicationsIndexRoute: typeof ApplicationsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +143,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quote': {
+      id: '/quote'
+      path: '/quote'
+      fullPath: '/quote'
+      preLoaderRoute: typeof QuoteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shop': {
+      id: '/shop'
+      path: '/shop'
+      fullPath: '/shop'
+      preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/technology': {
+      id: '/technology'
+      path: '/technology'
+      fullPath: '/technology'
+      preLoaderRoute: typeof TechnologyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/applications/': {
+      id: '/applications/'
+      path: '/applications'
+      fullPath: '/applications/'
+      preLoaderRoute: typeof ApplicationsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/applications/$slug': {
+      id: '/applications/$slug'
+      path: '/applications/$slug'
+      fullPath: '/applications/$slug'
+      preLoaderRoute: typeof ApplicationsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/$slug': {
+      id: '/products/$slug'
+      path: '/products/$slug'
+      fullPath: '/products/$slug'
+      preLoaderRoute: typeof ProductsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CompareRoute: CompareRoute,
+  QuoteRoute: QuoteRoute,
+  ShopRoute: ShopRoute,
+  TechnologyRoute: TechnologyRoute,
+  ApplicationsSlugRoute: ApplicationsSlugRoute,
+  ProductsSlugRoute: ProductsSlugRoute,
+  ApplicationsIndexRoute: ApplicationsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -11,6 +11,12 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { StoreProvider } from "@/lib/store";
+import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
+import { AiAdvisor } from "@/components/site/AiAdvisor";
+import { AssessmentDialog, CompareBar, MobileQuoteBar, QuoteDrawer } from "@/components/site/Overlays";
+import { Toaster } from "@/components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -81,14 +87,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Adreco Heat Pump — Air Source Heat Pumps for India" },
+      { name: "description", content: "High-performance air source heat pumps for residential, commercial and industrial applications across India." },
+      { name: "author", content: "Adreco Engineering Pvt. Ltd." },
+      { property: "og:title", content: "Adreco Heat Pump" },
+      { property: "og:description", content: "Smarter heating. Lower energy. Better comfort." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
@@ -96,6 +101,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" },
     ],
   }),
   shellComponent: RootShell,
@@ -123,8 +131,20 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <StoreProvider>
+        <Header />
+        <main className="pb-16 md:pb-0">
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+        <Footer />
+        <QuoteDrawer />
+        <CompareBar />
+        <MobileQuoteBar />
+        <AiAdvisor />
+        <AssessmentDialog />
+        <Toaster position="top-center" />
+      </StoreProvider>
     </QueryClientProvider>
   );
 }
