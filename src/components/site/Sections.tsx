@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { useRef } from "react";
-import { ArrowRight, BedDouble, Check, ChevronLeft, ChevronRight, Droplets, Factory, GraduationCap, Home, Hospital, Phone, ThermometerSun, Utensils, Waves, Wind } from "lucide-react";
+import { ArrowRight, BedDouble, Check, ChevronLeft, ChevronRight, Droplets, Factory, GraduationCap, Handshake, Home, Hospital, Phone, ThermometerSun, Utensils, Waves, Wind } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { caseStudies, solutions } from "@/data/content";
-import { Reveal, SectionHeading } from "./Reveal";
+import { Reveal } from "./Reveal";
 import { PerformanceChart } from "./PerformanceChart";
 import cutaway from "@/assets/tech-cutaway.png";
 
@@ -12,38 +12,38 @@ export const ICONS: Record<string, typeof Home> = { BedDouble, Hospital, Graduat
 export function ApplicationCard({ s }: { s: (typeof solutions)[number] }) {
   const I = ICONS[s.icon] ?? Home;
   return (
-    <Link to="/applications/$slug" params={{ slug: s.slug }} className="group relative block aspect-[4/5] overflow-hidden rounded-2xl shadow-card">
+    <Link to="/applications/$slug" params={{ slug: s.slug }} className="group relative block aspect-[5/6] overflow-hidden rounded-lg">
       <img src={s.image} alt={s.title} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
-      <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/40 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 p-4 text-navy-foreground">
-        <span className="grid h-10 w-10 place-items-center rounded-full bg-accent transition group-hover:scale-110"><I className="h-5 w-5" /></span>
-        <p className="mt-3 font-bold leading-tight">{s.title}</p>
-        <p className="mt-1 max-h-0 overflow-hidden text-xs text-navy-foreground/80 transition-all duration-300 group-hover:max-h-10">{s.short}</p>
+      <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/55 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 flex flex-col items-center p-3 text-center text-navy-foreground">
+        <I className="h-6 w-6 transition group-hover:-translate-y-0.5 group-hover:text-accent" />
+        <p className="mt-2 text-xs font-bold leading-tight sm:text-sm">{s.title}</p>
       </div>
     </Link>
   );
 }
 
 export function TechnologySection() {
-  const benefits = ["High COP and energy efficiency", "Intelligent PCB-based controls", "Inverter technology", "Eco-friendly R410A refrigerant", "Precision electronic expansion valve", "Tube-in-shell high-efficiency heat exchanger"];
+  const benefits = ["High COP & Energy Efficiency", "Low Ambient Operation (up to -30°C)", "Inverter Technology", "Eco-Friendly Refrigerant"];
   return (
-    <section className="relative overflow-hidden bg-gradient-navy py-20 text-navy-foreground md:py-28">
+    <section className="relative overflow-hidden bg-gradient-navy py-10 text-navy-foreground md:py-12">
       <div className="absolute inset-0 blueprint" />
-      <div className="absolute -left-40 top-20 h-96 w-96 rounded-full bg-primary-glow/30 blur-3xl float-slow" />
-      <div className="container-x relative grid items-center gap-12 lg:grid-cols-[1fr_1.1fr]">
+      <div className="container-x relative grid items-center gap-8 md:grid-cols-2 lg:grid-cols-[230px_1fr_1fr_1.2fr]">
         <Reveal>
-          <SectionHeading light eyebrow="Our Technology" title="Advanced Heat Pump Technology" intro="Extracts free heat from air as cold as -30°C and multiplies it — up to 5 kW of thermal energy for every 1 kW of electricity." />
-          <img src={cutaway} alt="Cutaway view of an Adreco heat pump showing compressor and copper refrigerant circuit" loading="lazy" className="mt-8 w-full max-w-lg rounded-2xl float-slow" />
+          <span className="eyebrow">Our technology</span>
+          <h2 className="mt-2 text-2xl font-extrabold leading-[1.15] md:text-[1.75rem]">Advanced Heat Pump Technology</h2>
+          <p className="mt-3 text-sm text-navy-foreground/80">A smart and efficient way to heat, even in extreme conditions.</p>
+          <Button asChild variant="cta" size="sm" className="mt-5 rounded-full px-5"><Link to="/technology">Learn More About Technology <ArrowRight /></Link></Button>
         </Reveal>
-        <Reveal delay={150} className="space-y-8">
-          <ul className="grid gap-3 sm:grid-cols-2">
-            {benefits.map((b) => <li key={b} className="flex items-start gap-3 rounded-xl bg-primary-foreground/5 p-3 text-sm"><span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-accent"><Check className="h-3.5 w-3.5" /></span>{b}</li>)}
+        <Reveal delay={80}><img src={cutaway} alt="Cutaway view of an Adreco heat pump showing compressor and copper refrigerant circuit" loading="lazy" className="mx-auto w-full max-w-xs rounded-xl" /></Reveal>
+        <Reveal delay={140}>
+          <ul className="space-y-4">
+            {benefits.map((b) => <li key={b} className="flex items-start gap-3 text-sm"><span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent"><Check className="h-3 w-3" /></span>{b}</li>)}
           </ul>
-          <div className="rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 p-5 backdrop-blur">
-            <p className="mb-3 font-bold">Performance in Cold Climate</p>
-            <PerformanceChart />
-          </div>
-          <Button asChild variant="cta" size="lg"><Link to="/technology">Explore Our Technology <ArrowRight /></Link></Button>
+        </Reveal>
+        <Reveal delay={200} className="rounded-xl border border-primary-foreground/15 bg-navy/60 p-4">
+          <p className="mb-2 text-sm font-bold">Performance in Cold Climate</p>
+          <PerformanceChart />
         </Reveal>
       </div>
     </section>
@@ -52,51 +52,45 @@ export function TechnologySection() {
 
 export function ProjectsCarousel() {
   const ref = useRef<HTMLDivElement>(null);
-  const scroll = (d: number) => ref.current?.scrollBy({ left: d * 340, behavior: "smooth" });
+  const scroll = (d: number) => ref.current?.scrollBy({ left: d * 300, behavior: "smooth" });
+  const arrow = "absolute top-1/2 z-10 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full border bg-background text-navy shadow-card transition hover:border-accent hover:text-accent";
   return (
-    <div className="relative">
-      <div ref={ref} className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 [scrollbar-width:none]">
+    <div className="relative px-5">
+      <button onClick={() => scroll(-1)} aria-label="Previous projects" className={`${arrow} left-0`}><ChevronLeft className="h-4 w-4" /></button>
+      <div ref={ref} className="flex snap-x snap-mandatory gap-3 overflow-x-auto [scrollbar-width:none]">
         {caseStudies.map((c) => (
-          <article key={c.slug} className="group w-[300px] shrink-0 snap-start overflow-hidden rounded-2xl bg-background shadow-card md:w-[360px]">
-            <div className="relative aspect-[16/10] overflow-hidden">
-              <img src={c.image} alt={`${c.title}, ${c.city}`} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <span className="absolute left-3 top-3 rounded-full bg-accent px-3 py-1 text-xs font-bold text-accent-foreground">{c.sector}</span>
+          <Link key={c.slug} to="/projects" hash={c.slug} className="group relative aspect-[16/9] w-[78%] shrink-0 snap-start overflow-hidden rounded-lg sm:w-[calc((100%-1.5rem)/3)]">
+            <img src={c.image} alt={`${c.title}, ${c.city}`} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/10 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-3 text-navy-foreground">
+              <p className="text-sm font-bold">{c.title}</p>
+              <p className="text-xs text-navy-foreground/80">{c.city}</p>
             </div>
-            <div className="p-5">
-              <h3 className="font-bold text-navy">{c.title}, {c.city}</h3>
-              <p className="mt-1 text-xs font-semibold text-primary">{c.product}</p>
-              <p className="mt-3 text-sm"><b className="text-navy">Challenge:</b> <span className="text-muted-foreground">{c.challenge}</span></p>
-              <p className="mt-1 text-sm"><b className="text-navy">Outcome:</b> <span className="text-muted-foreground">{c.outcome}</span></p>
-              <Link to="/projects" hash={c.slug} className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-accent">View Case Study <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></Link>
-            </div>
-          </article>
+          </Link>
         ))}
       </div>
-      <div className="mt-4 flex gap-2">
-        <button onClick={() => scroll(-1)} aria-label="Previous" className="grid h-11 w-11 place-items-center rounded-full border bg-background hover:border-accent hover:text-accent"><ChevronLeft /></button>
-        <button onClick={() => scroll(1)} aria-label="Next" className="grid h-11 w-11 place-items-center rounded-full border bg-background hover:border-accent hover:text-accent"><ChevronRight /></button>
-      </div>
+      <button onClick={() => scroll(1)} aria-label="Next projects" className={`${arrow} right-0`}><ChevronRight className="h-4 w-4" /></button>
     </div>
   );
 }
 
 export function PartnerBanner() {
   return (
-    <section className="container-x py-16">
-      <Reveal className="relative overflow-hidden rounded-3xl bg-gradient-navy p-8 text-navy-foreground md:p-12">
-        <div className="absolute inset-0 blueprint" />
-        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-accent/30 blur-3xl" />
-        <div className="relative flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+    <section className="relative overflow-hidden bg-gradient-navy text-navy-foreground">
+      <div className="absolute inset-0 blueprint" />
+      <div className="container-x relative flex flex-col items-start justify-between gap-5 py-6 md:flex-row md:items-center">
+        <div className="flex items-center gap-4">
+          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-primary-foreground/10"><Handshake className="h-6 w-6 text-accent" /></span>
           <div>
-            <h2 className="text-2xl font-extrabold md:text-3xl">Partner with Adreco Engineering</h2>
-            <p className="mt-2 text-navy-foreground/75">Let’s build a sustainable and energy-efficient future together.</p>
-          </div>
-          <div className="flex flex-wrap items-center gap-3">
-            <Button asChild variant="cta" size="lg"><Link to="/contact">Get in Touch <ArrowRight /></Link></Button>
-            <a href="tel:+919916844503" className="flex items-center gap-2 rounded-full border border-primary-foreground/20 px-5 py-3 font-semibold hover:border-accent"><Phone className="h-4 w-4" />+91 99168 44503</a>
+            <h2 className="text-xl font-extrabold md:text-2xl">Partner with Adreco Engineering</h2>
+            <p className="text-sm text-navy-foreground/80">Let’s build a sustainable and energy-efficient future together.</p>
           </div>
         </div>
-      </Reveal>
+        <div className="flex flex-wrap items-center gap-3">
+          <Button asChild variant="cta" className="rounded-full px-6"><Link to="/contact">Get in Touch <ArrowRight /></Link></Button>
+          <a href="tel:+919916844503" className="flex items-center gap-2 rounded-full bg-primary-foreground/10 px-5 py-2.5 text-sm font-semibold transition hover:bg-primary-foreground/20"><Phone className="h-4 w-4" />+91 99168 44503</a>
+        </div>
+      </div>
     </section>
   );
 }

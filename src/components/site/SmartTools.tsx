@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Calculator, Gauge, Home, Info, PiggyBank, Wand2 } from "lucide-react";
+import { ArrowRight, Calculator, Gauge, Home, Info, PiggyBank } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
@@ -9,9 +9,9 @@ import { products } from "@/data/products";
 import { cn } from "@/lib/utils";
 
 const TOOLS = [
-  { id: "wizard", title: "Heat Pump Selection Wizard", desc: "Get the right capacity for your building", icon: Home },
+  { id: "wizard", title: "Heat Pump Selection Calculator", desc: "Get the right capacity for your building", icon: Home },
   { id: "savings", title: "Energy Savings Calculator", desc: "Estimate savings & carbon reduction", icon: PiggyBank },
-  { id: "roi", title: "ROI / Payback Calculator", desc: "Know your payback period", icon: Gauge },
+  { id: "roi", title: "ROI Calculator", desc: "Know your payback period", icon: Gauge },
 ] as const;
 type ToolId = (typeof TOOLS)[number]["id"];
 
@@ -154,26 +154,44 @@ function Result({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function SmartTools({ initial = "wizard" }: { initial?: ToolId }) {
-  const [tool, setTool] = useState<ToolId>(initial);
+export function SmartTools({ initial = null }: { initial?: ToolId | null }) {
+  const [tool, setTool] = useState<ToolId | null>(initial);
   const [roiSeed, setRoiSeed] = useState(0);
   return (
     <div>
       <div className="grid gap-4 md:grid-cols-3">
         {TOOLS.map((t) => (
-          <button key={t.id} onClick={() => setTool(t.id)} aria-pressed={tool === t.id}
-            className={cn("group flex items-start gap-4 rounded-2xl border-2 bg-background p-5 text-left shadow-card transition hover:-translate-y-0.5", tool === t.id ? "border-accent" : "border-transparent")}>
-            <span className={cn("grid h-12 w-12 shrink-0 place-items-center rounded-xl transition", tool === t.id ? "bg-accent text-accent-foreground" : "bg-secondary text-primary")}><t.icon className="h-6 w-6" /></span>
-            <span className="min-w-0"><span className="block font-bold text-navy">{t.title}</span><span className="text-sm text-muted-foreground">{t.desc}</span>
-              <span className="mt-2 flex items-center gap-1 text-sm font-semibold text-accent"><Wand2 className="h-3.5 w-3.5" />{tool === t.id ? "Open below" : "Calculate now"}</span></span>
+          <button key={t.id} onClick={() => setTool(tool === t.id ? null : t.id)} aria-pressed={tool === t.id} aria-controls="tool-panel"
+            className={cn("group flex items-start gap-4 rounded-xl border bg-background p-5 text-left shadow-card transition hover:-translate-y-0.5 hover:shadow-lift", tool === t.id ? "border-accent" : "border-border")}>
+            <t.icon className={cn("h-9 w-9 shrink-0 transition", tool === t.id ? "text-accent" : "text-primary")} strokeWidth={1.75} />
+            <span className="min-w-0"><span className="block font-bold leading-snug text-navy">{t.title}</span><span className="mt-1 block text-sm text-foreground/70">{t.desc}</span>
+              <span className="mt-3 inline-flex items-center gap-1 border-b border-accent text-sm font-semibold text-accent">{tool === t.id ? "Close" : "Calculate Now"} <ArrowRight className="h-3.5 w-3.5" /></span></span>
           </button>
         ))}
       </div>
-      <div className="mt-6 rounded-3xl bg-background p-5 shadow-card md:p-8">
-        {tool === "wizard" && <Wizard />}
-        {tool === "savings" && <Savings onRoi={(s) => { setRoiSeed(s); setTool("roi"); }} />}
-        {tool === "roi" && <Roi key={roiSeed} initialSaving={roiSeed} />}
-      </div>
+      {tool && (
+        <div id="tool-panel" className="mt-5 rounded-xl border bg-background p-5 shadow-card animate-fade-up md:p-7">
+          {tool === "wizard" && <Wizard />}
+          {tool === "savings" && <Savings onRoi={(s) => { setRoiSeed(s); setTool("roi"); }} />}
+          {tool === "roi" && <Roi key={roiSeed} initialSaving={roiSeed} />}
+        </div>
+      )}
     </div>
+  );
+}
+
+export function SmartToolsSection() {
+  return (
+    <section id="tools" className="border-b bg-surface py-10 md:py-12">
+      <div className="container-x grid items-start gap-8 lg:grid-cols-[250px_minmax(0,1fr)] xl:gap-10">
+        <div>
+          <span className="eyebrow">Smart tools</span>
+          <h2 className="mt-2 text-2xl font-extrabold leading-[1.15] text-navy md:text-[1.75rem]">Plan with Confidence</h2>
+          <p className="mt-3 text-sm leading-relaxed text-foreground/75">Use our online tools to find the right heat pump for your project.</p>
+          <a href="#tool-cards" className="mt-5 inline-flex h-9 items-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-accent-foreground transition hover:brightness-105">Try Our Calculators <ArrowRight className="h-4 w-4" /></a>
+        </div>
+        <div id="tool-cards" className="min-w-0"><SmartTools /></div>
+      </div>
+    </section>
   );
 }

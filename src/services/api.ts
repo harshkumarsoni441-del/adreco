@@ -22,11 +22,6 @@ export async function submitContact(_data: Record<string, string>) {
   return { ok: true };
 }
 
-export async function subscribeNewsletter(_email: string) {
-  await wait(400);
-  return { ok: true };
-}
-
 export async function listProducts(): Promise<Product[]> {
   return products;
 }

@@ -10,7 +10,7 @@ export function Logo({ light }: { light?: boolean }) {
       </svg>
       <span className="leading-none">
         <span className={cn("block font-display text-xl font-black tracking-tight", light ? "text-navy-foreground" : "text-navy")}>ADRECO</span>
-        <span className={cn("block text-[10px] font-bold uppercase tracking-[0.22em]", light ? "text-navy-foreground/70" : "text-primary")}>Heat Pump</span>
+        <span className={cn("block text-[10px] font-bold uppercase tracking-[0.12em]", light ? "text-navy-foreground/70" : "text-primary")}>Engineering Pvt Ltd</span>
       </span>
     </Link>
   );
