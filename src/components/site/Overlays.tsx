@@ -113,7 +113,7 @@ export function AssessmentDialog() {
             <form className="grid gap-4" onSubmit={async (e) => {
               e.preventDefault();
               const fd = new FormData(e.currentTarget);
-              if (!fd.get("name") || !fd.get("phone")) return toast.error("Name and phone are required");
+              if (!fd.get("name") || !fd.get("phone")) { toast.error("Name and phone are required"); return; }
               setBusy(true); await submitContact(Object.fromEntries(fd) as Record<string, string>); setBusy(false); setDone(true);
             }}>
               <div className="grid gap-4 sm:grid-cols-2">

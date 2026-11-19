@@ -53,17 +53,17 @@ export function AiAdvisor() {
 
   const next = async (cur: number, a: Partial<AdvisorInput>) => {
     let n = cur + 1;
-    while (n < STEPS.length && a[STEPS[n].key] !== undefined) n++;
+    while (n < STEPS.length && a[STEPS[n]!.key] !== undefined) n++;
     if (n >= STEPS.length) {
       setStep(STEPS.length); setTyping(true);
       const r = await getRecommendation(a as AdvisorInput);
       setTyping(false); setResult(r); return;
     }
-    setStep(n); await bot(STEPS[n].q);
+    setStep(n); await bot(STEPS[n]!.q);
   };
 
   const answer = (val: string) => {
-    const s = STEPS[step];
+    const s = STEPS[step]; if (!s) return;
     const v = s.key === "demand" || s.key === "temp" ? Number(val) : val;
     if (s.key === "demand" && (!v || Number(v) <= 0)) return;
     const a = { ...ans, [s.key]: v };

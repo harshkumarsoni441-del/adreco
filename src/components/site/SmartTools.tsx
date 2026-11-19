@@ -19,7 +19,7 @@ function Field({ label, value, unit, min, max, step = 1, onChange }: { label: st
   return (
     <div>
       <div className="flex items-center justify-between text-sm"><Label>{label}</Label><span className="font-bold text-navy">{value.toLocaleString("en-IN")} {unit}</span></div>
-      <Slider className="mt-3" value={[value]} min={min} max={max} step={step} onValueChange={([v]) => onChange(v)} aria-label={label} />
+      <Slider className="mt-3" value={[value]} min={min} max={max} step={step} onValueChange={([v]) => v !== undefined && onChange(v)} aria-label={label} />
     </div>
   );
 }
@@ -60,7 +60,7 @@ function Wizard() {
   const perUnit = { home: 60, hotel: 120, hostel: 45, hospital: 150 }[type];
   const litres = units * perUnit;
   const kw = sizeKw(litres, temp, climate === "cold");
-  const rec = products.filter((p) => (climate === "cold" ? p.coldClimate : true) && p.capacityKw[1] >= Math.min(kw, 60) && p.type !== "Swimming Pool" && p.type !== "Dryer").sort((a, b) => a.capacityKw[1] - b.capacityKw[1])[0] ?? products[4];
+  const rec = products.filter((p) => (climate === "cold" ? p.coldClimate : true) && p.capacityKw[1] >= Math.min(kw, 60) && p.type !== "Swimming Pool" && p.type !== "Dryer").sort((a, b) => a.capacityKw[1] - b.capacityKw[1])[0] ?? products[4]!;
   const qty = Math.max(1, Math.ceil(kw / rec.capacityKw[1]));
   return (
     <div className="grid gap-8 lg:grid-cols-2">
@@ -132,7 +132,7 @@ function Roi({ initialSaving }: { initialSaving: number }) {
       <Result>
         <p className="text-sm text-navy-foreground/70">Estimated payback</p>
         <p className="text-4xl font-extrabold text-accent">{Number.isFinite(yrs) ? `${yrs.toFixed(1)} years` : "—"}</p>
-        <p className="mt-1 text-sm">12-year net benefit: <b>{inr(pts[life])}</b></p>
+        <p className="mt-1 text-sm">12-year net benefit: <b>{inr(pts[life] ?? 0)}</b></p>
         <svg viewBox={`0 0 ${W} ${H}`} className="mt-5 w-full" role="img" aria-label="Cumulative savings chart">
           <line x1="0" x2={W} y1={py(0)} y2={py(0)} className="stroke-primary-foreground/30" strokeDasharray="4 4" />
           <path d={pts.map((v, i) => `${i ? "L" : "M"}${px(i)},${py(v)}`).join(" ")} fill="none" strokeWidth="3" className="stroke-accent" />

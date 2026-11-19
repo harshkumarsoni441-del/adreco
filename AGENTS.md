@@ -28,3 +28,6 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- Frontend-only prototype: product/content data lives in `src/data/*`, all "backend" calls go through mock functions in `src/services/api.ts`, and quote cart/compare state lives in `src/lib/store.tsx` (localStorage) — so a real backend can replace the mocks without touching UI.
+- Estimation formulas for calculators live in `src/lib/calc.ts` with tests in `src/lib/calc.test.ts`.

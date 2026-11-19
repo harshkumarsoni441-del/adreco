@@ -10,8 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as CompareRouteImport } from './routes/compare'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as QuoteRouteImport } from './routes/quote'
+import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as TechnologyRouteImport } from './routes/technology'
 import { Route as ApplicationsIndexRouteImport } from './routes/applications.index'
@@ -23,14 +27,34 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompareRoute = CompareRouteImport.update({
   id: '/compare',
   path: '/compare',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuoteRoute = QuoteRouteImport.update({
   id: '/quote',
   path: '/quote',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesRoute = ResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ShopRoute = ShopRouteImport.update({
@@ -61,8 +85,12 @@ const ProductsSlugRoute = ProductsSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/compare': typeof CompareRoute
+  '/contact': typeof ContactRoute
+  '/projects': typeof ProjectsRoute
   '/quote': typeof QuoteRoute
+  '/resources': typeof ResourcesRoute
   '/shop': typeof ShopRoute
   '/technology': typeof TechnologyRoute
   '/applications/$slug': typeof ApplicationsSlugRoute
@@ -71,8 +99,12 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/compare': typeof CompareRoute
+  '/contact': typeof ContactRoute
+  '/projects': typeof ProjectsRoute
   '/quote': typeof QuoteRoute
+  '/resources': typeof ResourcesRoute
   '/shop': typeof ShopRoute
   '/technology': typeof TechnologyRoute
   '/applications/$slug': typeof ApplicationsSlugRoute
@@ -82,8 +114,12 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/compare': typeof CompareRoute
+  '/contact': typeof ContactRoute
+  '/projects': typeof ProjectsRoute
   '/quote': typeof QuoteRoute
+  '/resources': typeof ResourcesRoute
   '/shop': typeof ShopRoute
   '/technology': typeof TechnologyRoute
   '/applications/$slug': typeof ApplicationsSlugRoute
@@ -94,8 +130,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/compare'
+    | '/contact'
+    | '/projects'
     | '/quote'
+    | '/resources'
     | '/shop'
     | '/technology'
     | '/applications/$slug'
@@ -104,8 +144,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/compare'
+    | '/contact'
+    | '/projects'
     | '/quote'
+    | '/resources'
     | '/shop'
     | '/technology'
     | '/applications/$slug'
@@ -114,8 +158,12 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/compare'
+    | '/contact'
+    | '/projects'
     | '/quote'
+    | '/resources'
     | '/shop'
     | '/technology'
     | '/applications/$slug'
@@ -125,8 +173,12 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   CompareRoute: typeof CompareRoute
+  ContactRoute: typeof ContactRoute
+  ProjectsRoute: typeof ProjectsRoute
   QuoteRoute: typeof QuoteRoute
+  ResourcesRoute: typeof ResourcesRoute
   ShopRoute: typeof ShopRoute
   TechnologyRoute: typeof TechnologyRoute
   ApplicationsSlugRoute: typeof ApplicationsSlugRoute
@@ -143,6 +195,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compare': {
       id: '/compare'
       path: '/compare'
@@ -150,11 +209,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompareRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/quote': {
       id: '/quote'
       path: '/quote'
       fullPath: '/quote'
       preLoaderRoute: typeof QuoteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources': {
+      id: '/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof ResourcesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/shop': {
@@ -197,8 +277,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   CompareRoute: CompareRoute,
+  ContactRoute: ContactRoute,
+  ProjectsRoute: ProjectsRoute,
   QuoteRoute: QuoteRoute,
+  ResourcesRoute: ResourcesRoute,
   ShopRoute: ShopRoute,
   TechnologyRoute: TechnologyRoute,
   ApplicationsSlugRoute: ApplicationsSlugRoute,

@@ -15,7 +15,7 @@ import heroImg from "@/assets/p-commercial.jpg";
 
 export const Route = createFileRoute("/shop")({
   validateSearch: (s: Record<string, unknown>): { type?: ProductType } =>
-    typeof s.type === "string" && productTypes.includes(s.type as ProductType) ? { type: s.type as ProductType } : {},
+    typeof s["type"] === "string" && productTypes.includes(s["type"] as ProductType) ? { type: s["type"] as ProductType } : {},
   head: () => ({
     meta: [
       { title: "Shop Heat Pumps — Adreco Product Catalogue" },
@@ -45,13 +45,13 @@ function Filters({ f, set }: { f: F; set: (f: F) => void }) {
           <label key={a} className="flex cursor-pointer items-center gap-2 text-sm"><Checkbox checked={f.apps.includes(a)} onCheckedChange={() => set({ ...f, apps: toggle(f.apps, a) })} />{a}</label>))}</div>
       </fieldset>
       <div><div className="flex justify-between text-sm"><Label className="font-bold text-navy">Heating capacity</Label><span>{f.cap[0]}–{f.cap[1]} kW</span></div>
-        <Slider className="mt-3" min={0} max={70} step={1} value={f.cap} onValueChange={(v) => set({ ...f, cap: [v[0], v[1]] })} aria-label="Heating capacity" /></div>
+        <Slider className="mt-3" min={0} max={70} step={1} value={f.cap} onValueChange={(v) => set({ ...f, cap: [v[0] ?? 0, v[1] ?? 70] })} aria-label="Heating capacity" /></div>
       <div><div className="flex justify-between text-sm"><Label className="font-bold text-navy">Operates down to</Label><span>{f.minAmbient}°C</span></div>
-        <Slider className="mt-3" min={-25} max={0} step={1} value={[f.minAmbient]} onValueChange={([v]) => set({ ...f, minAmbient: v })} aria-label="Minimum ambient temperature" /></div>
+        <Slider className="mt-3" min={-25} max={0} step={1} value={[f.minAmbient]} onValueChange={([v]) => set({ ...f, minAmbient: v ?? 0 })} aria-label="Minimum ambient temperature" /></div>
       <div><div className="flex justify-between text-sm"><Label className="font-bold text-navy">Hot water temp (min)</Label><span>{f.minWater}°C</span></div>
-        <Slider className="mt-3" min={40} max={80} step={5} value={[f.minWater]} onValueChange={([v]) => set({ ...f, minWater: v })} aria-label="Minimum hot water temperature" /></div>
+        <Slider className="mt-3" min={40} max={80} step={5} value={[f.minWater]} onValueChange={([v]) => set({ ...f, minWater: v ?? 40 })} aria-label="Minimum hot water temperature" /></div>
       <div><div className="flex justify-between text-sm"><Label className="font-bold text-navy">COP (min)</Label><span>{f.minCop.toFixed(1)}</span></div>
-        <Slider className="mt-3" min={3} max={5} step={0.1} value={[f.minCop]} onValueChange={([v]) => set({ ...f, minCop: v })} aria-label="Minimum COP" /></div>
+        <Slider className="mt-3" min={3} max={5} step={0.1} value={[f.minCop]} onValueChange={([v]) => set({ ...f, minCop: v ?? 3 })} aria-label="Minimum COP" /></div>
       <label className="flex items-center justify-between text-sm font-bold text-navy">Suitable for cold climate<Switch checked={f.cold} onCheckedChange={(v) => set({ ...f, cold: v })} /></label>
       <Button variant="soft" className="w-full" onClick={() => set(DEFAULT)}>Reset filters</Button>
     </div>

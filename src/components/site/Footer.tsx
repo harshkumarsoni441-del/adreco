@@ -44,7 +44,7 @@ export function Footer() {
           </ul>
           <form className="mt-6 flex gap-2" onSubmit={async (e) => {
             e.preventDefault();
-            if (!/^\S+@\S+\.\S+$/.test(email)) return toast.error("Enter a valid email");
+            if (!/^\S+@\S+\.\S+$/.test(email)) { toast.error("Enter a valid email"); return; }
             setBusy(true); await subscribeNewsletter(email); setBusy(false); setEmail("");
             toast.success("Subscribed to Adreco insights");
           }}>

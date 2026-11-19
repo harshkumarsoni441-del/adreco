@@ -27,7 +27,7 @@ const PROJECTS = ["Residential", "Hotel / resort", "Hospital", "Education", "Ind
 
 function Quote() {
   const { items, setQty, remove, clear } = useStore();
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<{ [k: string]: string | undefined; projectType?: string }>({});
   const [busy, setBusy] = useState(false);
   const [projectType, setProjectType] = useState("");
   const [callTime, setCallTime] = useState("");
@@ -50,15 +50,15 @@ function Quote() {
       <section className="container-x grid gap-10 py-12 lg:grid-cols-[1fr_400px]">
         <form noValidate className="grid gap-5 rounded-2xl bg-surface p-6 md:p-8" onSubmit={async (e) => {
           e.preventDefault();
-          const fd = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
-          const er: Record<string, string> = {};
+          const fd = Object.fromEntries(new FormData(e.currentTarget)) as { [k: string]: string } as any;
+          const er: { [k: string]: string } & { name?: string; phone?: string; email?: string; city?: string; projectType?: string } = {};
           if (!fd.name?.trim()) er.name = "Please enter your name";
           if (!/^[+\d\s-]{8,}$/.test(fd.phone ?? "")) er.phone = "Enter a valid phone number";
           if (!/^\S+@\S+\.\S+$/.test(fd.email ?? "")) er.email = "Enter a valid email";
           if (!fd.city?.trim()) er.city = "Please enter your city";
           if (!projectType) er.projectType = "Select a project type";
           setErrors(er);
-          if (Object.keys(er).length) return toast.error("Please fix the highlighted fields");
+          if (Object.keys(er).length) { toast.error("Please fix the highlighted fields"); return; }
           setBusy(true);
           const r = await submitQuote({ name: fd.name, company: fd.company, phone: fd.phone, email: fd.email, city: fd.city, projectType, message: fd.message, callTime, items });
           setBusy(false); clear(); setRef(r.reference); window.scrollTo({ top: 0 });
@@ -67,8 +67,8 @@ function Quote() {
             {[["name", "Name *", "text"], ["company", "Company", "text"], ["phone", "Phone *", "tel"], ["email", "Email *", "email"], ["city", "City *", "text"]].map(([n, l, t]) => (
               <div key={n} className="grid gap-1.5">
                 <Label htmlFor={`q-${n}`}>{l}</Label>
-                <Input id={`q-${n}`} name={n} type={t} aria-invalid={!!errors[n]} className="bg-background" />
-                {errors[n] && <p className="text-xs text-destructive">{errors[n]}</p>}
+                <Input id={`q-${n}`} name={n} type={t} aria-invalid={!!errors[n!]} className="bg-background" />
+                {errors[n!] && <p className="text-xs text-destructive">{errors[n!]}</p>}
               </div>
             ))}
             <div className="grid gap-1.5">
